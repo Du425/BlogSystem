@@ -2,6 +2,7 @@ package com.du.blog.service;
 
 import com.du.blog.entity.MUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author Du425
  * @since 2021-11-25
  */
+
 public interface IMUserService extends IService<MUser> {
 
 }

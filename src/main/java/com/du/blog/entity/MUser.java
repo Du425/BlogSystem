@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.stereotype.Repository;
 
 /**
  * <p>
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author Du425
  * @since 2021-11-25
  */
+@Repository
 @TableName("m_user")
 @ApiModel(value = "MUser对象", description = "")
 public class MUser implements Serializable {
