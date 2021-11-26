@@ -10,13 +10,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountRealm extends AuthorizingRealm {
+
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return super.supports(token);
+    }
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         return null;
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        //强转为JWT的token
+        JwtToken jwtToken = (JwtToken) token;
+        System.out.println(" == ");
         return null;
     }
 }

@@ -13,13 +13,20 @@ spring:
   profiles:
     active: dev
 
-
-#  mvc:
-##    static-path-pattern: /static/**
-#    format:
-#     date: yyyy-MM-dd
-
-
 mybatis-plus:
   type-aliases-package: com.du.blog.entity
   mapper-locations: classpath:mapper/*.xml
+
+shiro-redis:
+  enabled: true
+  shiro-manager:
+    host: 127.0.0.1:6379
+du:
+  jwt:
+    secret: afwragviuxjqcedveioskd
+    expire:
+    header: Authorization
+
+
+
+

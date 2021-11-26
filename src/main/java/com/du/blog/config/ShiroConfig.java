@@ -3,6 +3,7 @@ package com.du.blog.config;
 
 
 import com.du.blog.shiro.AccountRealm;
+import com.du.blog.shiro.JwtFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SessionsSecurityManager;
@@ -36,8 +37,8 @@ import java.util.Map;
 
 public class ShiroConfig {
 
-//    @Autowired
-//    JwtFilter jwtFilter
+    @Autowired
+    JwtFilter jwtFilter;
 
     @Bean
     public SessionManager sessionManager(RedisSessionDAO redisSessionDAO) {
@@ -90,9 +91,9 @@ public class ShiroConfig {
                                                          ShiroFilterChainDefinition shiroFilterChainDefinition) {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
         shiroFilter.setSecurityManager(securityManager);
-//        Map<String, Filter> filters = new HashMap<>();
-//        filters.put("jwt", jwtFilter);
-//        shiroFilter.setFilters(filters);
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("jwt", jwtFilter);
+        shiroFilter.setFilters(filters);
         Map<String, String> filterMap = shiroFilterChainDefinition.getFilterChainMap();
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
@@ -108,6 +109,8 @@ public class ShiroConfig {
     public static DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator() {
         return new DefaultAdvisorAutoProxyCreator();
     }
+
+
 
 
 }
