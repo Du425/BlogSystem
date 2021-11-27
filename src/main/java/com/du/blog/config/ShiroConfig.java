@@ -34,7 +34,6 @@ import java.util.Map;
 
 
 @Configuration
-
 public class ShiroConfig {
 
     @Autowired

@@ -1,14 +1,1 @@
-{
-  "properties": [
-    {
-      "name": "shiro-redis.enabled",
-      "type": "java.lang.String",
-      "description": "Description for shiro-redis.enabled."
-    },
-    {
-      "name": "shiro-redis.shiro-manager",
-      "type": "java.lang.String",
-      "description": "Description for shiro-redis.shiro-manager."
-    }
-  ]
-}
+{}
