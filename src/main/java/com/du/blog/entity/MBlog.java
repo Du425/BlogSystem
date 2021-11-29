@@ -9,6 +9,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * <p>
  * 
@@ -28,11 +31,11 @@ public class MBlog implements Serializable {
     private Long id;
 
     private Long userId;
-
+    @NotBlank(message = "标题不能为空")
     private String title;
-
-    private String desription;
-
+    @NotBlank(message = "描述不能为空")
+    private String description;
+    @NotBlank(message = "内容不能为空")
     private String content;
 
     private LocalDateTime created;
@@ -64,12 +67,12 @@ public class MBlog implements Serializable {
         this.title = title;
     }
 
-    public String getDesription() {
-        return desription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesription(String desription) {
-        this.desription = desription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getContent() {
@@ -102,7 +105,7 @@ public class MBlog implements Serializable {
         "id=" + id +
         ", userId=" + userId +
         ", title=" + title +
-        ", desription=" + desription +
+        ", description=" + description +
         ", content=" + content +
         ", created=" + created +
         ", status=" + status +
