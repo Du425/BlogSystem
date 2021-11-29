@@ -8,9 +8,7 @@ import com.du.blog.dto.LoginDto;
 import com.du.blog.entity.MUser;
 import com.du.blog.response.CommonResult;
 import com.du.blog.service.IMUserService;
-import com.du.blog.shiro.JwtFilter;
 import com.du.blog.util.JwtUtil;
-import org.apache.catalina.security.SecurityUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.transform.Result;
 
 @RestController
 public class AccountController {

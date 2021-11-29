@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.du.blog.entity.MBlog;
+import com.du.blog.mapper.MBlogMapper;
 import com.du.blog.response.CommonResult;
 import com.du.blog.service.IMBlogService;
 import com.du.blog.util.ShiroUtil;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -32,6 +34,9 @@ public class MBlogController {
         @Autowired
         IMBlogService imBlogService;
 
+        @Autowired
+        MBlogMapper mBlogMapper;
+
         @GetMapping("/blogs") //分页功能
         public CommonResult blogs(Integer currentPage) {
             if(currentPage == null || currentPage < 1) currentPage = 1;
@@ -39,6 +44,18 @@ public class MBlogController {
             IPage<MBlog> pageData = imBlogService.page(page,new QueryWrapper<MBlog>().orderByDesc("created"));
             return  CommonResult.success(pageData);
         }
+
+        @GetMapping("/queryBlogList")
+        public CommonResult queryBlogList(MBlog mBlog){
+            QueryWrapper<MBlog> objectQueryWrapper = new QueryWrapper<>(null);
+            List<MBlog> mBlogs = mBlogMapper.selectList(objectQueryWrapper);
+            for (MBlog blog : mBlogs) {
+                System.out.println(blog);
+            }
+            return CommonResult.success(mBlog);
+        }
+
+
         @GetMapping("/queryById/{id}")
         public CommonResult detail(@PathVariable(name = "id") Long id) {
             MBlog blog = imBlogService.getById(id);
@@ -68,5 +85,23 @@ public class MBlogController {
             imBlogService.saveOrUpdate(temp);
             return CommonResult.success("操作成功", null);
         }
+
+        @DeleteMapping("/delete")
+        public CommonResult delete(MBlog mBlog){
+            QueryWrapper<MBlog> objectQueryWrapper = new QueryWrapper<>();
+            objectQueryWrapper.eq("title",mBlog.getTitle());
+//                    .or().eq("description",mBlog.getDescription())
+//                    .or().eq("user_id",mBlog.getUserId());
+//            int mBlog1 = mBlogMapper.delete(objectQueryWrapper);
+//            if (mBlog1 == 1){
+//                return CommonResult.success()
+//            }
+            if (mBlogMapper.delete(objectQueryWrapper)==1){
+                return CommonResult.success("删除成功");
+            }else {
+                return CommonResult.failed("删除失败",mBlog);
+            }
+        }
+
 }
 

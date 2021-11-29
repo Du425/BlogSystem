@@ -2,6 +2,7 @@ package com.du.blog.controller;
 
 
 import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.du.blog.entity.MUser;
 import com.du.blog.mapper.MUserMapper;
 import com.du.blog.response.CommonResult;
@@ -9,6 +10,8 @@ import com.du.blog.service.IMUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,20 +32,13 @@ public class MUserController {
 
 //    @RequiresAuthentication
     @GetMapping("/index")
-   public CommonResult index(){
-//        if (mUserMapper.selectById(1L)==null){
-//            return CommonResult.failed("查询失败");
-//        }else {
-//            return CommonResult.success("查询成功",mUserMapper.selectById(1L));
-//        }
+    public CommonResult index(){
         MUser byId = imUserService.getById(1L);
         return CommonResult.success(byId);
-
-
     }
 
-    @PostMapping("/save")
-    public CommonResult save(@Validated @RequestBody MUser mUser){
+    @PostMapping("/insert")
+    public CommonResult insert(@Validated @RequestBody MUser mUser){
         String rawPassword = mUser.getPassword();
         String password = SecureUtil.md5(rawPassword);
         SecureUtil.md5(password);
@@ -53,8 +49,31 @@ public class MUserController {
         }else {
             return CommonResult.failed("插入失败");
         }
-
     }
+
+    @DeleteMapping("/delete")
+    public CommonResult delete(MUser mUser){
+        QueryWrapper<MUser> objectQueryWrapper = new QueryWrapper<>();
+        objectQueryWrapper.eq("username",mUser.getUsername())
+                .or().eq("id",mUser.getId())
+                .or().eq("email",mUser.getEmail());
+        if (mUserMapper.delete(objectQueryWrapper)==1){
+            return CommonResult.success("删除成功");
+        }else {
+            return CommonResult.success("删除失败");
+        }
+    }
+
+    @GetMapping("/queryUserList")
+    public CommonResult userList(MUser mUser){
+        QueryWrapper<MUser> objectQueryWrapper = new QueryWrapper<>(null);
+        List<MUser> userList = mUserMapper.selectList(objectQueryWrapper);
+        for (MUser user : userList) {
+            System.out.println(user);
+        }
+        return CommonResult.success(userList);
+    }
+
 
 
 
