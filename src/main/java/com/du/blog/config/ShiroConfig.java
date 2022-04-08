@@ -105,7 +105,5 @@ public class ShiroConfig {
         return new DefaultAdvisorAutoProxyCreator();
     }
 
-
-
-
+    
 }
